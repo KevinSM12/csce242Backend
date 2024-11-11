@@ -1,7 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+    origin:'https://csce242project-z84c.onrender.com/',
+    methods:'GET,POST,PUT,DELETE',
+    allowedHeaders: 'Content-Type, Authorization'
+};
+
+app.use(cors(corsOptions));
 app.use(express.static("public"));
 
 const records = [
