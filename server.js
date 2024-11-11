@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = express();
 
 const corsOptions = {
-    origin:'https://csce242project-z84c.onrender.com/',
+    origin:'https://csce242project-z84c.onrender.com',
     methods:'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type, Authorization'
 };
