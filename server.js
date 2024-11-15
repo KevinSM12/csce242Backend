@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const Joi = require("joi");
 const app = express();
 
 const corsOptions = {
@@ -10,6 +11,19 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.static("public"));
+
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/images/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 const records = [
 
@@ -413,3 +427,48 @@ app.get("/",(request,response)=>{
 app.get("/api/records",(request,response)=>{
     response.json(records);
 });
+
+app.post("/api/house_plans", upload.single("img"), (req, res) => {
+    console.log("In a post request");
+
+    const result = validateRecord(req.body);
+
+    if (result.error) {
+        res.status(400).send(result.error.details[0].message);
+        console.log("I have an error");
+        return;
+    }
+
+    const record = {
+        _id: records.length + 1,
+        title: req.body.record_title,
+        desc: req.body.record_description,
+        holder: req.body.record_holder,
+        holderDesc: req.body.record_holder_desc,
+        prev: req.body.prev_record_holder,
+        prevDesc: req.body.prev_record_holder_desc
+    };
+
+    if (req.file) {
+        record.main_image = req.file.filename;
+    }
+
+    housePlans.push(house);
+
+    console.log(house);
+    res.status(200).send(house);
+    });
+
+    const validateRecord = (record) => {
+    const schema = Joi.object({
+        id: Joi.number().required(),
+        title: Joi.string().min(3).required(),
+        desc: Joi.string().min(3).required(),
+        holder: Joi.string().min(3).required(),
+        holderDesc: Joi.string().min(3).required(),
+        prev: Joi.string().min(3).required(),
+        prevDesc: Joi.string().min(3).required()
+    });
+
+    return schema.validate(record);
+    };
