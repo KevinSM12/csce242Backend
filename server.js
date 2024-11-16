@@ -428,35 +428,35 @@ app.get("/api/records",(request,response)=>{
     response.json(records);
 });
 
-app.post("/api/house_plans", upload.single("img"), (req, res) => {
+app.post("/api/house_plans", upload.single("img"), (request, response) => {
     console.log("In a post request");
 
-    const result = validateRecord(req.body);
+    const result = validateRecord(request.body);
 
     if (result.error) {
-        res.status(400).send(result.error.details[0].message);
+        response.status(400).send(result.error.details[0].message);
         console.log("I have an error");
         return;
     }
 
     const record = {
         _id: records.length + 1,
-        title: req.body.record_title,
-        desc: req.body.record_description,
-        holder: req.body.record_holder,
-        holderDesc: req.body.record_holder_desc,
-        prev: req.body.prev_record_holder,
-        prevDesc: req.body.prev_record_holder_desc
+        title: request.body.record_title,
+        desc: request.body.record_description,
+        holder: request.body.record_holder,
+        holderDesc: request.body.record_holder_desc,
+        prev: request.body.prev_record_holder,
+        prevDesc: request.body.prev_record_holder_desc
     };
 
-    if (req.file) {
+    if (request.file) {
         record.main_image = req.file.filename;
     }
 
-    housePlans.push(house);
+    records.push(record);
 
-    console.log(house);
-    res.status(200).send(house);
+    console.log(record);
+    response.status(200).send(record);
     });
 
     const validateRecord = (record) => {
