@@ -428,7 +428,7 @@ app.get("/api/records",(request,response)=>{
     response.json(records);
 });
 
-app.post("/api/house_plans", upload.single("img"), (request, response) => {
+app.post("/api/records", upload.single("img"), (request, response) => {
     console.log("In a post request");
 
     const result = validateRecord(request.body);
@@ -457,9 +457,9 @@ app.post("/api/house_plans", upload.single("img"), (request, response) => {
 
     console.log(record);
     response.status(200).send(record);
-    });
+});
 
-    const validateRecord = (record) => {
+const validateRecord = (record) => {
     const schema = Joi.object({
         id: Joi.number().required(),
         title: Joi.string().min(3).required(),
@@ -471,4 +471,4 @@ app.post("/api/house_plans", upload.single("img"), (request, response) => {
     });
 
     return schema.validate(record);
-    };
+};
