@@ -517,6 +517,3 @@ app.put("/api/records/:id", upload.single("img"), (req,res)=>{
     return schema.validate(record);
 };
   
-  app.listen(3001, () => {
-    console.log("Listening....");
-  });
