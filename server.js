@@ -4,7 +4,8 @@ const Joi = require("joi");
 const app = express();
 
 const corsOptions = {
-    origin:'http://localhost:3000',
+    origin:'https://csce242project-z84c.onrender.com',
+    //origin:'http://localhost:3000',
     methods:'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type, Authorization'
 };
@@ -459,7 +460,50 @@ app.post("/api/records", upload.single("img"), (request, response) => {
     response.status(200).send(record);
 });
 
-const validateRecord = (record) => {
+app.put("/api/records/:id", upload.single("img"), (req,res)=>{
+    const record = records.find((housePlan)=>housePlan._id ===parseInt(req.params.id));
+  
+    if(!record){
+      res.status(404).send("The house with the provided id was not found");
+      return;
+    }
+  
+    const result = validateRecord(req.body);
+  
+    if(result.error){
+      res.status(400).send(result.error.details[0].message);
+      return;
+    }
+  
+    _id=records.length + 1,
+    title= request.body.record_title,
+    desc= request.body.record_description,
+    holder= request.body.record_holder,
+    holderDesc= request.body.record_holder_desc,
+    prev= request.body.prev_record_holder,
+    prevDesc= request.body.prev_record_holder_desc
+  
+    if(req.file){
+        record.record_image = req.file.filename;
+    }
+  
+    res.status(200).send(record);
+  });
+  
+  app.delete("/api/records/:id", (req,res)=>{
+    const record = records.find((record)=>record._id ===parseInt(req.params.id));
+  
+    if(!record){
+      res.status(404).send("The record with the provided id was not found");
+      return;
+    }
+  
+    const index = records.indexOf(record);
+    records.splice(index,1);
+    res.status(200).send(record);
+  });
+  
+  const validateRecord = (record) => {
     const schema = Joi.object({
         id: Joi.number().required(),
         title: Joi.string().min(3).required(),
@@ -472,3 +516,7 @@ const validateRecord = (record) => {
 
     return schema.validate(record);
 };
+  
+  app.listen(3001, () => {
+    console.log("Listening....");
+  });
