@@ -4,8 +4,8 @@ const Joi = require("joi");
 const app = express();
 
 const corsOptions = {
-    //origin:'https://csce242project-z84c.onrender.com',
-    origin:'http://localhost:3000',
+    origin:'https://csce242project-z84c.onrender.com',
+    //origin:'http://localhost:3000',
     methods:'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type, Authorization'
 };
