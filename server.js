@@ -37,7 +37,7 @@ mongoose
         console.log("couldn't connect",error);
     })
 
-const recordSchema = new mongoose.SchemaType({
+const recordSchema = new mongoose.Schema({
     _id: Number,
     title: String,
     image: String,
