@@ -38,7 +38,7 @@ mongoose
     })
 
 const recordSchema = new mongoose.SchemaType({
-    _id: number,
+    _id: Number,
     title: String,
     image: String,
     description: String,
