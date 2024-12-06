@@ -4,8 +4,8 @@ const Joi = require("joi");
 const app = express();
 
 const corsOptions = {
-    origin:'https://csce242project-z84c.onrender.com',
-    //origin:'http://localhost:3000',
+    //origin:'https://csce242project-z84c.onrender.com',
+    origin:'http://localhost:3000',
     methods:'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type, Authorization'
 };
@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
 
 mongoose
     .connect(
-        "mongodb+srv://coolkevino:<db_password>@csce242.bdyb6.mongodb.net/?retryWrites=true&w=majority&appName=csce242"
+        "mongodb+srv://coolkevino:hh.8QK4JxuX274@csce242.bdyb6.mongodb.net/?retryWrites=true&w=majority&appName=csce242"
     )
     .then(()=>{
         console.log("connected to mongo");
